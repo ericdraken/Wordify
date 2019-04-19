@@ -77,7 +77,7 @@ public class ValidateNumericTest
 			{" -123", WHITESPACE},
 			{".", FRACTION},
 			{"123", null},
-			{"१२३४५६७८९", ASCII},
+			{"१२३४५६७८९", ASCII}, // Indian numerals are considered digits by Character.isDigit()!
 			{"一二", ASCII}
 		};
 	}

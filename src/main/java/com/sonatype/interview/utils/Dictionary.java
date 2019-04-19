@@ -2,17 +2,19 @@
  * Copyright (c) 2019. Eric Draken - ericdraken.com
  */
 
-package com.sonatype.interview;
+package com.sonatype.interview.utils;
 
-public class Dictionary
+abstract public class Dictionary
 {
-	final static String NEGATIVE = "negative";
+	final static public String SPACE = " ";
 
-	final static String HUNDRED = "hundred";
+	final static public String NEGATIVE = "negative";
 
-	final static String AND = "and";	// Modify this if you want, say, a comma
+	final static public String HUNDRED = "hundred";
 
-	final static String[] TENS = new String[]{
+	final static public String AND = "and";	// Modify this if you want, say, a comma
+
+	final static public String[] ONE_TO_NINETEEN = new String[]{
 		"zero",
 		"one",
 		"two",
@@ -24,9 +26,6 @@ public class Dictionary
 		"eight",
 		"nine",
 		"ten",
-	};
-
-	final static String[] TEENS = new String[]{
 		"eleven",
 		"twelve",
 		"thirteen",
@@ -38,7 +37,8 @@ public class Dictionary
 		"nineteen"
 	};
 
-	final static String[] TEN_SCALES = new String[]{
+	final static public String[] TENS = new String[]{
+		"", // Empty so the indices make sense
 		"ten",
 		"twenty",
 		"thirty",
@@ -52,7 +52,7 @@ public class Dictionary
 
 	// REF: JavaScript source code of https://lingojam.com/NumbersToWords
 	// TODO: Verify the vocabulary
-	final static String[] THOUSAND_SCALES = new String[]{
+	final static public String[] THOUSAND_SCALES = new String[]{
 		"thousand",
 		"million",
 		"billion",
