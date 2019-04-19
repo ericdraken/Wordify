@@ -14,6 +14,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class ValidateNumericTest
 {
+	// Zero-width whitespace characters
+	// REF: https://stackoverflow.com/a/21797208/1938889
+	private final static String INVISIBLE_WHITESPACE = "123" + Character.toString( (char)8203 ) + "456";
+
 	private static String[] validStrings()
 	{
 		return new String[]{
@@ -29,6 +33,7 @@ public class ValidateNumericTest
 		return new String[]{
 			"",
 			" ",
+			INVISIBLE_WHITESPACE,
 			"abc",
 			"100c",
 			"--100",
@@ -52,6 +57,8 @@ public class ValidateNumericTest
 		return new String[][]{
 			{"", EMPTY},
 			{" ", WHITESPACE},
+			// {INVISIBLE_WHITESPACE, WHITESPACE},	// Invisible space is not considered a space by Java
+			{INVISIBLE_WHITESPACE, MIXED},
 			{"abc", MIXED},
 			{"100c", MIXED},
 			{"--100", DASH},

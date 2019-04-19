@@ -14,7 +14,7 @@ public class ValidateNumeric
 
 	final static String WHITESPACE = "A valid number doesn't contain whitespace";
 
-	final static String HEX = "Numbers starting with 0 are hex numbers.";
+	final static String HEX = "Numbers starting with 0 are hexadecimal numbers.";
 
 	final static String FRACTION = "Fractional numbers are not supported.";
 
@@ -22,6 +22,11 @@ public class ValidateNumeric
 
 	final static String INVALID = "The number is invalid.";
 
+	/**
+	 *
+	 * @param number
+	 * @return
+	 */
 	public static String validateWithHints( @NotNull String number )
 	{
 		if ( ! ValidateNumeric.isValidIntegerRepresentation( number ) )
@@ -34,31 +39,34 @@ public class ValidateNumeric
 				return EMPTY;
 			}
 
-			if ( number.contains( " " ) )
-			{
-				return WHITESPACE;
-			}
-
-			if ( number.contains( "-" ) )
-			{
-				return DASH;
-			}
-
 			if ( number.startsWith( "0" ) )
 			{
 				return HEX;
 			}
 
-			if ( number.contains( "." ) )
+			// Simple for-loop over the characters
+			// to find the offending character
+			for ( char chr : number.toCharArray() )
 			{
-				return FRACTION;
+				if ( Character.isWhitespace( chr ) )
+				{
+					return WHITESPACE;
+				}
+				if ( chr == '-' )
+				{
+					return DASH;
+				}
+				if ( chr == '.' )
+				{
+					return FRACTION;
+				}
+				if ( ! Character.isDigit( chr ) )
+				{
+					return MIXED;
+				}
 			}
 
-			if ( ! number.matches("^[0-9]+$" ) )
-			{
-				return MIXED;
-			}
-
+			// Catch all
 			return INVALID;
 		}
 
