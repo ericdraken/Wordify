@@ -48,7 +48,9 @@ public class ValidateNumericTest
 			"- ",
 			"- 123",
 			" -123",
-			"."
+			".",
+			"१२३४५६७८९",	// Indian numerals are considered digits by Character.isDigit()!
+			"一二" 		// Japanese numbers
 		};
 	}
 
@@ -58,7 +60,7 @@ public class ValidateNumericTest
 			{"", EMPTY},
 			{" ", WHITESPACE},
 			// {INVISIBLE_WHITESPACE, WHITESPACE},	// Invisible space is not considered a space by Java
-			{INVISIBLE_WHITESPACE, MIXED},
+			{INVISIBLE_WHITESPACE, ASCII},
 			{"abc", MIXED},
 			{"100c", MIXED},
 			{"--100", DASH},
@@ -74,7 +76,9 @@ public class ValidateNumericTest
 			{"- 123", WHITESPACE},
 			{" -123", WHITESPACE},
 			{".", FRACTION},
-			{"123", null}
+			{"123", null},
+			{"१२३४५६७८९", ASCII},
+			{"一二", ASCII}
 		};
 	}
 

@@ -18,6 +18,8 @@ public class ValidateNumeric
 
 	final static String FRACTION = "Fractional numbers are not supported.";
 
+	final static String ASCII = "Only ASCII characters are allowed.";
+
 	final static String MIXED = "Numbers can only contain the numerals 0-9 and start with a -.";
 
 	final static String INVALID = "The number is invalid.";
@@ -48,10 +50,6 @@ public class ValidateNumeric
 			// to find the offending character
 			for ( char chr : number.toCharArray() )
 			{
-				if ( Character.isWhitespace( chr ) )
-				{
-					return WHITESPACE;
-				}
 				if ( chr == '-' )
 				{
 					return DASH;
@@ -60,7 +58,16 @@ public class ValidateNumeric
 				{
 					return FRACTION;
 				}
-				if ( ! Character.isDigit( chr ) )
+				if ( chr >= 128 )
+				{
+					return ASCII;
+				}
+				if ( chr == ' ' )
+				{
+					return WHITESPACE;
+				}
+				// ASCII '0' = 48, '9' = 57
+				if ( chr < 48 || chr > 57 )
 				{
 					return MIXED;
 				}
@@ -92,11 +99,14 @@ public class ValidateNumeric
 		}
 
 		// Leading zeros means hex
-		if ( number.startsWith( "0" ) )
+		if ( number.charAt( 0 ) == '0' )
 		{
 			return false;
 		}
 
-		return number.chars().allMatch( Character::isDigit );
+		// ASCII '0' = 48, '9' = 57
+		return number.chars().allMatch( chr ->
+			chr >= 48 && chr <= 57
+		);
 	}
 }
