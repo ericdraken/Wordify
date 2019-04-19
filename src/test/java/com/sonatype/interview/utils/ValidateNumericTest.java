@@ -7,12 +7,14 @@ package com.sonatype.interview.utils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import static com.sonatype.interview.utils.ValidateNumeric.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class NumericTest
+public class ValidateNumericTest
 {
-	public static String[] validStrings()
+	private static String[] validStrings()
 	{
 		return new String[]{
 			"123",
@@ -22,7 +24,7 @@ public class NumericTest
 		};
 	}
 
-	public static String[] invalidStrings()
+	private static String[] invalidStrings()
 	{
 		return new String[]{
 			"",
@@ -41,6 +43,31 @@ public class NumericTest
 			"- ",
 			"- 123",
 			" -123",
+			"."
+		};
+	}
+
+	private static String[][] invalidStringsWithHints()
+	{
+		return new String[][]{
+			{"", EMPTY},
+			{" ", WHITESPACE},
+			{"abc", MIXED},
+			{"100c", MIXED},
+			{"--100", DASH},
+			{"100-000", DASH},
+			{"100-", DASH},
+			{"07", HEX},
+			{"007", HEX},
+			{"1.0", FRACTION},
+			{"123E234", MIXED},
+			{"-0", HEX},
+			{"-", EMPTY},
+			{"- ", WHITESPACE},
+			{"- 123", WHITESPACE},
+			{" -123", WHITESPACE},
+			{".", FRACTION},
+			{"123", null}
 		};
 	}
 
@@ -48,13 +75,20 @@ public class NumericTest
 	@MethodSource( value = "validStrings" )
 	void isValidIntegerRepresentation_valid( String number )
 	{
-		assertTrue( Numeric.isValidIntegerRepresentation( number ) );
+		assertTrue( ValidateNumeric.isValidIntegerRepresentation( number ) );
 	}
 
 	@ParameterizedTest
 	@MethodSource( value = "invalidStrings" )
 	void isValidIntegerRepresentation_invalid( String number )
 	{
-		assertFalse( Numeric.isValidIntegerRepresentation( number ) );
+		assertFalse( ValidateNumeric.isValidIntegerRepresentation( number ) );
+	}
+
+	@ParameterizedTest
+	@MethodSource( value = "invalidStringsWithHints" )
+	void validateWithHints( String number, String hint )
+	{
+		assertEquals( hint, ValidateNumeric.validateWithHints( number ) );
 	}
 }
