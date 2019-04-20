@@ -21,37 +21,11 @@ public class ValidateNumericTest
 	private static String[] validStrings()
 	{
 		return new String[]{
+			"-123",
 			"0",
 			"123",
-			"-123",
 			"89038450983409580934850934850834",
-			"890384509834095809348509348508348903845098340958093485093485083489038450983409580934850934850834890384509834095809348509348508348903845098340958093485093485083489038450983409580934850934850834"
-		};
-	}
-
-	private static String[] invalidStrings()
-	{
-		return new String[]{
-			"",
-			" ",
-			INVISIBLE_WHITESPACE,
-			"abc",
-			"100c",
-			"--100",
-			"100-000",
-			"100-",
-			"07",
-			"007",
-			"1.0",
-			"123E234",
-			"-0",
-			"-",
-			"- ",
-			"- 123",
-			" -123",
-			".",
-			"१२३४५६७८९",	// Indian numerals are considered digits by Character.isDigit()!
-			"一二" 		// Japanese numbers
+			ValidateNumeric.maxIntegerRepresentation()	// 9999...99
 		};
 	}
 
@@ -60,8 +34,7 @@ public class ValidateNumericTest
 		return new String[][]{
 			{"", EMPTY},
 			{" ", WHITESPACE},
-			// {INVISIBLE_WHITESPACE, WHITESPACE},	// Invisible space is not considered a space by Java
-			{INVISIBLE_WHITESPACE, ASCII},
+			{INVISIBLE_WHITESPACE, ASCII}, // Invisible space is not considered a space by Java
 			{"abc", MIXED},
 			{"100c", MIXED},
 			{"--100", DASH},
@@ -77,9 +50,10 @@ public class ValidateNumericTest
 			{"- 123", WHITESPACE},
 			{" -123", WHITESPACE},
 			{".", FRACTION},
-			{"123", null},
 			{"१२३४५६७८९", ASCII}, // Indian numerals are considered digits by Character.isDigit()!
-			{"一二", ASCII}
+			{"一二", ASCII},
+			{ValidateNumeric.maxIntegerRepresentation()+'9', TOO_LONG},
+			{"-"+ValidateNumeric.maxIntegerRepresentation()+'9', TOO_LONG}
 		};
 	}
 
@@ -91,8 +65,8 @@ public class ValidateNumericTest
 	}
 
 	@ParameterizedTest
-	@MethodSource( value = "invalidStrings" )
-	void isValidIntegerRepresentation_invalid( String number )
+	@MethodSource( value = "invalidStringsWithHints" )
+	void isValidIntegerRepresentation_invalid( String number, String ignored )	// Ignore the hint
 	{
 		assertFalse( ValidateNumeric.isValidIntegerRepresentation( number ) );
 	}

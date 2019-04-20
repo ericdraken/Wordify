@@ -14,6 +14,16 @@ abstract public class Dictionary
 
 	final static public String AND = "and";	// Modify this if you want, say, a comma
 
+	public static String lastScale()
+	{
+		return Dictionary.THOUSAND_SCALES[ Dictionary.THOUSAND_SCALES.length-1 ];
+	}
+
+	public static int numScales()
+	{
+		return Dictionary.THOUSAND_SCALES.length;
+	}
+
 	final static public String[] ONE_TO_NINETEEN = new String[]{
 		"zero",
 		"one",

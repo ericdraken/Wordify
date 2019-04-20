@@ -28,10 +28,14 @@ public class ValidateNumeric
 
 	final static String NEGATIVE_WHAT = "Negative what?";
 
+	final static String TOO_LONG = String.format( "Cannot exceed 999 %s.", Dictionary.lastScale() );
+
 	/**
+	 * If the number is an invalid integer representation, return a hint
+	 * as to why it fails, otherwise return null
 	 *
-	 * @param number
-	 * @return
+	 * @param number Integer as a string
+	 * @return A hint as to why the string is invalid
 	 */
 	public static String validateWithHints( @NotNull String number )
 	{
@@ -39,9 +43,16 @@ public class ValidateNumeric
 		{
 			boolean isNegative = number.startsWith( "-" );
 
+			// More groups than scales
+			if ( number.length() > (Dictionary.numScales() * 3) + 3 )
+			{
+				return TOO_LONG;
+			}
+
 			// Remove leading dash
 			number = isNegative ? number.substring( 1 ) : number;
 
+			// Empty cases
 			if ( number.isEmpty() )
 			{
 				if ( isNegative )
@@ -53,7 +64,7 @@ public class ValidateNumeric
 			// Hint things like -0, 01, 0.12, etc.
 			if ( number.charAt( 0 ) == '0' )
 			{
-				if ( isNegative )
+				if ( isNegative && number.length() == 1 )
 				{
 					return NEGATIVE_ZERO;
 				}
@@ -116,19 +127,33 @@ public class ValidateNumeric
 			return false;
 		}
 
+		// Leading zeros means hex (or a fraction - either way, no good), and -0 is illogical
 		if ( number.charAt( 0 ) == '0'  )
 		{
-			// Leading zeros means hex (or a fraction - either way, no good),
-			// and -0 is illogical
 			if ( number.length() > 1 || isNegative )
 			{
 				return false;
 			}
 		}
 
+		// More groups than scales
+		if ( number.length() > (Dictionary.numScales() * 3) + 3 )
+		{
+			return false;
+		}
+
 		// ASCII '0' = 48, '9' = 57
 		return number.chars().allMatch( chr ->
 			chr >= 48 && chr <= 57
 		);
+	}
+
+	/**
+	 * Return the maximum possible integer representation of Wordify
+	 * @return 99999999...999
+	 */
+	public static String maxIntegerRepresentation()
+	{
+		return new String( new char[(Dictionary.numScales() * 3) + 3] ).replace( "\0", "9" );
 	}
 }
