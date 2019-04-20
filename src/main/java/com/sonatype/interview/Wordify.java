@@ -10,7 +10,12 @@ import java.util.ArrayList;
 
 import static com.sonatype.interview.utils.Dictionary.*;
 
-public class Wordify
+/**
+ * Class to convert string representation of an integer into English words.
+ * The string must be well-formed already.
+ * Perform ValidateNumeric.isValidIntegerRepresentation() first.
+ */
+class Wordify
 {
 	/**
 	 * Convert the integer representation of a number to English words
@@ -19,7 +24,7 @@ public class Wordify
 	 * @param number String representation of an integer
 	 * @return English words representing the given number
 	 */
-    protected static String numberToWords( @NotNull String number )
+    static String numberToWords( @NotNull String number )
     {
     	boolean isNegative = false;
 		ArrayList<String> parts = new ArrayList<>( 1 );
@@ -115,7 +120,7 @@ public class Wordify
 	 * @param nnNumber An int from 1 to 999
 	 * @return The English words for this number. If the number is not in range, then return an empty string.
 	 */
-	static String smallIntToWords( int nnNumber, boolean withAnd )
+	private static String smallIntToWords( int nnNumber, boolean withAnd )
 	{
 		String andStr = ( withAnd ? AND + SPACE : "" );		// add an 'and' between 100 and the remainder
 

@@ -6,6 +6,9 @@ package com.sonatype.interview.utils;
 
 import org.jetbrains.annotations.NotNull;
 
+/**
+ * String integer representation validator with error hinting
+ */
 public class ValidateNumeric
 {
 	final static String EMPTY = "The number is empty.";
@@ -115,7 +118,7 @@ public class ValidateNumeric
 	 * @param number The string representation of an integer number
 	 * @return True if this is valid, false otherwise
 	 */
-	public static boolean isValidIntegerRepresentation( @NotNull String number )
+	static boolean isValidIntegerRepresentation( @NotNull String number )
 	{
 		// Remove the leading negative before performing the digit tests
 		boolean isNegative = number.startsWith( "-" );

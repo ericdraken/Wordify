@@ -27,9 +27,13 @@ class Pair<A, B>
 	}
 }
 
+/**
+ * Test converting ints to words, and finally
+ * int strings to full word strings
+ */
 class WordifyTest
 {
-	private static String[][] testStrings()
+	private static String[][] testWordifiedStrings()
 	{
 		return new String[][]{
 			{"0", "Zero"},
@@ -154,7 +158,7 @@ class WordifyTest
 	}
 
 	@ParameterizedTest
-	@MethodSource( value = "testStrings" )
+	@MethodSource( value = "testWordifiedStrings" )
 	void smallIntToWords3( String rep, String words )
 	{
 		assertEquals( words, Wordify.numberToWords( rep ) );

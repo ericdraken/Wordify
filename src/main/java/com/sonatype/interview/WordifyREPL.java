@@ -15,7 +15,8 @@ import static java.lang.System.getProperty;
  * Read in an integer representation of a number and
  * print out the English words representing that number.
  * If the input is invalid, print a hint as to why.
- * The will enter in a REPL loop until q or quit is entered.
+ * This will enter in a REPL loop until q or quit is entered.
+ * See the readme.md file for more details
  */
 public class WordifyREPL extends Wordify
 {
@@ -71,7 +72,9 @@ public class WordifyREPL extends Wordify
 			}
 			else
 			{
+				System.out.println();
 				System.out.println( numberToWords( str ) );
+				System.out.println();
 			}
 		}
 	}

@@ -31,6 +31,7 @@ public class ValidateNumericTest
 
 	private static String[][] invalidStringsWithHints()
 	{
+		// The hints below are strings from ValidateNumeric
 		return new String[][]{
 			{"", EMPTY},
 			{" ", WHITESPACE},

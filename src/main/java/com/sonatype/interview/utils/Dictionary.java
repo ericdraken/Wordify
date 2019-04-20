@@ -4,6 +4,10 @@
 
 package com.sonatype.interview.utils;
 
+/**
+ * Dictionary of words used to convert a string representation
+ * of integers into English words
+ */
 abstract public class Dictionary
 {
 	final static public String SPACE = " ";
@@ -14,12 +18,22 @@ abstract public class Dictionary
 
 	final static public String AND = "and";	// Modify this if you want, say, a comma
 
-	public static String lastScale()
+	/**
+	 * Return the very last thousands scale
+	 *
+	 * @return The last scale
+	 */
+	static String lastScale()
 	{
 		return Dictionary.THOUSAND_SCALES[ Dictionary.THOUSAND_SCALES.length-1 ];
 	}
 
-	public static int numScales()
+	/**
+	 * Return the number of thousands scales
+	 *
+	 * @return Number of thousands scales
+	 */
+	static int numScales()
 	{
 		return Dictionary.THOUSAND_SCALES.length;
 	}
@@ -60,7 +74,6 @@ abstract public class Dictionary
 		"ninety",
 	};
 
-	// REF: JavaScript source code of https://lingojam.com/NumbersToWords
 	// TODO: Verify the vocabulary
 	final static public String[] THOUSAND_SCALES = new String[]{
 		"thousand",
