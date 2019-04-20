@@ -14,7 +14,7 @@ public class ValidateNumeric
 
 	final static String WHITESPACE = "A valid number doesn't contain whitespace";
 
-	final static String HEX = "Numbers starting with 0 are hexadecimal numbers.";
+	final static String ZERO = "Integers start with a 1 through 9.";
 
 	final static String FRACTION = "Fractional numbers are not supported.";
 
@@ -23,6 +23,10 @@ public class ValidateNumeric
 	final static String MIXED = "Numbers can only contain the numerals 0-9 and start with a -.";
 
 	final static String INVALID = "The number is invalid.";
+
+	final static String NEGATIVE_ZERO = "Zero is a non-negative number and cannot be made negative.";
+
+	final static String NEGATIVE_WHAT = "Negative what?";
 
 	/**
 	 *
@@ -33,17 +37,30 @@ public class ValidateNumeric
 	{
 		if ( ! ValidateNumeric.isValidIntegerRepresentation( number ) )
 		{
+			boolean isNegative = number.startsWith( "-" );
+
 			// Remove leading dash
-			number = number.startsWith( "-" ) ? number.substring( 1 ) : number;
+			number = isNegative ? number.substring( 1 ) : number;
 
 			if ( number.isEmpty() )
 			{
-				return EMPTY;
+				if ( isNegative )
+					return NEGATIVE_WHAT;
+				else
+					return EMPTY;
 			}
 
-			if ( number.startsWith( "0" ) )
+			// Hint things like -0, 01, 0.12, etc.
+			if ( number.charAt( 0 ) == '0' )
 			{
-				return HEX;
+				if ( isNegative )
+				{
+					return NEGATIVE_ZERO;
+				}
+				else if ( number.length() > 1 )
+				{
+					return ZERO;
+				}
 			}
 
 			// Simple for-loop over the characters
@@ -90,7 +107,8 @@ public class ValidateNumeric
 	public static boolean isValidIntegerRepresentation( @NotNull String number )
 	{
 		// Remove the leading negative before performing the digit tests
-		number = number.startsWith( "-" ) ? number.substring( 1 ) : number;
+		boolean isNegative = number.startsWith( "-" );
+		number = isNegative ? number.substring( 1 ) : number;
 
 		// Empty
 		if ( number.isEmpty() )
@@ -98,10 +116,14 @@ public class ValidateNumeric
 			return false;
 		}
 
-		// Leading zeros means hex
-		if ( number.charAt( 0 ) == '0' )
+		if ( number.charAt( 0 ) == '0'  )
 		{
-			return false;
+			// Leading zeros means hex (or a fraction - either way, no good),
+			// and -0 is illogical
+			if ( number.length() > 1 || isNegative )
+			{
+				return false;
+			}
 		}
 
 		// ASCII '0' = 48, '9' = 57

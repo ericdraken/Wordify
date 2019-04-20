@@ -21,6 +21,7 @@ public class ValidateNumericTest
 	private static String[] validStrings()
 	{
 		return new String[]{
+			"0",
 			"123",
 			"-123",
 			"89038450983409580934850934850834",
@@ -66,12 +67,12 @@ public class ValidateNumericTest
 			{"--100", DASH},
 			{"100-000", DASH},
 			{"100-", DASH},
-			{"07", HEX},
-			{"007", HEX},
+			{"07", ZERO},
+			{"007", ZERO},
 			{"1.0", FRACTION},
 			{"123E234", MIXED},
-			{"-0", HEX},
-			{"-", EMPTY},
+			{"-0", NEGATIVE_ZERO},
+			{"-", NEGATIVE_WHAT},
 			{"- ", WHITESPACE},
 			{"- 123", WHITESPACE},
 			{" -123", WHITESPACE},
