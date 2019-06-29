@@ -78,3 +78,10 @@ Here are the given requirements for the Wordify program.
 ## Getting help
 
 Looking for help? Contact the author at [ericdraken@gmail.com](mailto:ericdraken@gmail.com).
+
+## Addendum
+
+This is a project designed to highlight my development process and how I comment and commit. 
+I didn't squash any commits so the evaluator can see my code evolution. This is the same question
+Sonatype has been using for years I'm told, so hopefully this can give hints to future candidates.
+Sonatype is aware of my solution, so please vary your answer.
